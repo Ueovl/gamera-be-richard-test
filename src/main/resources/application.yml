@@ -11,7 +11,7 @@ spring:
     password: admin
   flyway:
     enabled: true
-    schemas: franchise
+    schemas: gamera
   jpa:
     properties:
       hibernate:
