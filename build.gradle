@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "org.flywaydb.flyway" version "7.7.0"
 }
 
 group = 'com.avengers'
@@ -24,11 +25,26 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+	implementation 'com.google.guava:guava:31.1-jre'
+
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+
 	compileOnly 'org.projectlombok:lombok'
+
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+flyway {
+	url = 'jdbc:postgresql://localhost:5432/postgres?currentSchema=gamera'
+	user = 'postgres'
+	password = 'admin'
+	locations = ['classpath:db/migration']
 }
 
 tasks.named('test') {

@@ -9,9 +9,25 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=gamera
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
 
+  pgadmin:
+    image: dpage/pgadmin4
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    restart: always
+    ports:
+      - 8002:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gamera.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - persist
+
 volumes:
   postgresql_data: {}
+  pgadmin-data: {}
+networks:
+  persist: {}
