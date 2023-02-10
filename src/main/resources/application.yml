@@ -1,19 +1,21 @@
 server:
   port: 8080
   servlet:
-    context-path: /api/v1
+    context-path: /api
 
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/gamera
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=gamera
     username: postgres
     password: admin
-
+  flyway:
+    enabled: true
+    schemas: gamera
   jpa:
-    database: postgresql
     properties:
       hibernate:
-        default_schema: forum
+        default_schema: gamera
         jdbc:
           time_zone: UTC
+    show-sql: true
