@@ -1,10 +1,10 @@
 
-# 环境配置
+# Environment Config
 SpringBoot 2.7.8   
 Gradle-Groovy   
 java 17
 
-# 项目依赖
+# Project Dependency
 lombok  
 Spring web  
 spring Data JPA  
