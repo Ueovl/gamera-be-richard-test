@@ -45,10 +45,6 @@
 
 ## Running
 * Have PostgresSQL up and running by docker-compose before running the application
-* A private Spring profile can be used to __override__ the Spring properties specific to your local environment:
-  ```
-  src/main/resources/application-local.yml
-  ```
 * Run the application by typing below command:
   ```shell
   make app_local_run
