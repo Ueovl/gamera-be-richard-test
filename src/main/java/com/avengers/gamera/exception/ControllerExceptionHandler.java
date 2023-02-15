@@ -12,6 +12,18 @@ import java.util.List;
 @Slf4j
 @RestControllerAdvice
 public class ControllerExceptionHandler {
+    @ExceptionHandler(value = {ResourceNotFoundException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDto handleResourceNotFoundException(ResourceNotFoundException e) {
+        return new ErrorDto(HttpStatus.NOT_FOUND.getReasonPhrase(), List.of(e.getMessage()));
+    }
+
+    @ExceptionHandler(value = {ResourceExistException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDto handleResourceNotFoundException(ResourceExistException e) {
+        return new ErrorDto(HttpStatus.CONFLICT.getReasonPhrase(), List.of(e.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDto handleUnexpectedExceptions(Exception e) {
