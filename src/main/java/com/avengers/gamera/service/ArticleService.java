@@ -26,6 +26,7 @@ public class ArticleService {
         if (StringUtils.isBlank(img)) {
             article.setCoverImgUrl("https://spicsum.photos/800/400");
         }
+        log.info("Saving new article to database");
         return articleMapper.articleToArticleGetDto(articleRepository.save(article));
     }
 }

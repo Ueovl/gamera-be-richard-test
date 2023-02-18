@@ -1,5 +1,6 @@
 package com.avengers.gamera.dto.article;
 
+import com.avengers.gamera.constant.ArticleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,5 @@ public class ArticlePostDto {
 
     @NotNull(message = "Article type must be provided.")
     @Enumerated(EnumType.STRING)
-    private String type;
+    private ArticleType type;
 }

@@ -11,13 +11,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -41,11 +40,9 @@ public class Article {
     @Column(nullable = false)
     private String text;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String type;
-
-    @Transient
-    private ArticleType articleType;
+    private ArticleType type;
 
     @Column(nullable = false)
     private boolean isDeleted = false;
@@ -55,18 +52,4 @@ public class Article {
 
     @UpdateTimestamp
     private OffsetDateTime updatedTime;
-
-    @PostLoad
-    void fillTransient() {
-        if (type != null) {
-            this.articleType = ArticleType.of(type);
-        }
-    }
-
-    @PrePersist
-    void fillPersistent() {
-        if (articleType != null) {
-            this.type = articleType.getTypeName();
-        }
-    }
 }
