@@ -7,6 +7,7 @@ import com.avengers.gamera.mapper.ArticleMapper;
 import com.avengers.gamera.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,7 +23,7 @@ public class ArticleService {
         String img = article.getCoverImgUrl();
 
         //TODO after image upload function implemented, this url should from user
-        if (img == null || img.isEmpty()) {
+        if (StringUtils.isBlank(img)) {
             article.setCoverImgUrl("https://spicsum.photos/800/400");
         }
         return articleMapper.articleToArticleGetDto(articleRepository.save(article));

@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("articles")
 @RequiredArgsConstructor
@@ -25,7 +23,7 @@ public class ArticleController {
     @PostMapping
     @Operation(summary = "Create new article")
     @ResponseStatus(HttpStatus.CREATED)
-    public ArticleGetDto createArticle(@Valid @RequestBody ArticlePostDto articlePostDto) {
+    public ArticleGetDto createArticle(@RequestBody ArticlePostDto articlePostDto) {
         return articleService.createArticle(articlePostDto);
     }
 }
