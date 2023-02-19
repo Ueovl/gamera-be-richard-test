@@ -47,9 +47,9 @@ public class Game {
     private Boolean is_deleted=false;
 
     @CreationTimestamp
-    private OffsetDateTime createdTime;
+    private OffsetDateTime created_time;
 
     @UpdateTimestamp
-    private OffsetDateTime updatedTime;
+    private OffsetDateTime updated_time;
 
 }

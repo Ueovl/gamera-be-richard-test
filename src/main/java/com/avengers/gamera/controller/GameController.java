@@ -2,12 +2,10 @@ package com.avengers.gamera.controller;
 
 import com.avengers.gamera.dto.game.GameGetDto;
 import com.avengers.gamera.dto.game.GamePostDto;
+import com.avengers.gamera.dto.game.GameUpdateDto;
 import com.avengers.gamera.service.GameService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,5 +18,20 @@ public class GameController {
     @PostMapping
     public GameGetDto createGame (@Valid @RequestBody GamePostDto gamePostDto){
         return gameService.createGame(gamePostDto);
+    }
+
+    @GetMapping("/{id}")
+    public  GameGetDto getGame(@PathVariable Long id){
+        return gameService.getGame(id);
+    }
+
+    @PutMapping
+    public GameGetDto updateGame(@Valid @RequestBody GameUpdateDto gameUpdateDto){
+        return gameService.updateGame(gameUpdateDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteGame(@PathVariable Long id){
+        return gameService.deleteGame(id);
     }
 }
