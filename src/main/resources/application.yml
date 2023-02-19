@@ -20,7 +20,7 @@ spring:
           time_zone: UTC
     show-sql: true
 
-    cors:
-      allowed-origins: "*"
-      allowed-methods: "*"
-      allowed-headers: "*"
+cors:
+allowed-origins: "*"
+allowed-methods: "*"
+allowed-headers: "*"
