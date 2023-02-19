@@ -1,5 +1,6 @@
 package com.avengers.gamera.entity;
 
+import com.avengers.gamera.constant.ArticleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,49 +11,45 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.time.OffsetDateTime;
-import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "article")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(unique = true, nullable = false)
-    private String email;
+    private String coverImgUrl;
 
     @Column(nullable = false)
-    private String password;
+    private String title;
+
+    @Column(nullable = false)
+    private String text;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ArticleType type;
+
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 
     @CreationTimestamp
     private OffsetDateTime createdTime;
 
     @UpdateTimestamp
     private OffsetDateTime updatedTime;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id")
-    )
-    private Set<Authority> authorities;
 }
