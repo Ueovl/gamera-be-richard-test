@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 @Builder
@@ -13,15 +14,37 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class GameUpdateDto {
-    @NotNull
+
     private Long id;
+    @NotNull
     private String name;
+    @NotNull
     private String platform;
+
+    @NotNull
     private Date releaseDate;
+
+    @NotNull
     private String country;
+    private Boolean isDeleted;
+
+    @NotNull
     private Double scores;
+
+    @NotNull
     private String developers;
+
+    @NotNull
     private String publishers;
+
+    @NotNull
     private String introduction;
+
+    @NotNull
     private String description;
+
+    private OffsetDateTime createdTime;
+
+    private OffsetDateTime updatedTime;
+
 }

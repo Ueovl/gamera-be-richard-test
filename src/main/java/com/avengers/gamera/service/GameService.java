@@ -11,6 +11,8 @@ import com.avengers.gamera.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+
 @RequiredArgsConstructor
 @Service
 public class GameService {
@@ -37,8 +39,12 @@ public class GameService {
         return gameMapper.GameToGameGetDto(game);
     }
 
-    public GameGetDto updateGame(GameUpdateDto gameUpdateDto) {
-        gameRepository.findGameByIdAndIsDeleted(gameUpdateDto.getId(), false).orElseThrow(() -> new ResourceNotFoundException("game"));
+    public GameGetDto updateGame(GameUpdateDto gameUpdateDto, Long id) {
+        Game game = gameRepository.findGameByIdAndIsDeleted(id, false).orElseThrow(() -> new ResourceNotFoundException("game"));
+        gameUpdateDto.setCreatedTime(game.getCreatedTime());
+        gameUpdateDto.setId(id);
+        gameUpdateDto.setIsDeleted(game.getIsDeleted());
+        gameUpdateDto.setUpdatedTime(OffsetDateTime.now());
         gameMapper.GameUpdateDtoToGame(gameUpdateDto);
 
         return gameMapper.GameToGameGetDto(gameRepository.save((gameMapper.GameUpdateDtoToGame(gameUpdateDto))));
