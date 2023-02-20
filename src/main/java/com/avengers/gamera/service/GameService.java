@@ -18,13 +18,14 @@ public class GameService {
     public final GameMapper gameMapper;
 
     public GameGetDto createGame(GamePostDto gamePostDto) {
-        Game game=gameMapper.GamePostDtoToGame(gamePostDto);
+        Game game = gameMapper.GamePostDtoToGame(gamePostDto);
         isExist(game.getName());
         return gameMapper.GameToGameGetDto(gameRepository.save(game));
     }
 
-    public boolean isExist (String name){
-        Boolean isExist= gameRepository.existsUserByName(name);
+    public boolean isExist(String name) {
+
+        Boolean isExist = gameRepository.existsUserByName(name);
         if (Boolean.TRUE.equals(isExist)) {
             throw new ResourceExistException("Game already existed!");
         }
@@ -32,28 +33,20 @@ public class GameService {
     }
 
     public GameGetDto getGame(Long id) {
-        Game game =gameRepository.findGameByIdAndIs_deleted(id, false).orElseThrow(()->new ResourceNotFoundException("game"));
+        Game game = gameRepository.findGameByIdAndIsDeleted(id, false).orElseThrow(() -> new ResourceNotFoundException("game"));
         return gameMapper.GameToGameGetDto(game);
     }
 
     public GameGetDto updateGame(GameUpdateDto gameUpdateDto) {
-        Game game=gameRepository.findGameByIdAndIs_deleted(gameUpdateDto.getId(), false).orElseThrow(()->new ResourceNotFoundException("game"));
-        game.setName(gameUpdateDto.getName());
-        game.setPlatform(gameUpdateDto.getPlatform());
-        game.setRelease_date(gameUpdateDto.getRelease_date());
-        game.setCountry(gameUpdateDto.getCountry());
-        game.setScores(gameUpdateDto.getScores());
-        game.setDevelopers(gameUpdateDto.getDevelopers());
-        game.setPublishers(gameUpdateDto.getPublishers());
-        game.setIntroduction(gameUpdateDto.getIntroduction());
-        game.setDescription(gameUpdateDto.getDescription());
+        gameRepository.findGameByIdAndIsDeleted(gameUpdateDto.getId(), false).orElseThrow(() -> new ResourceNotFoundException("game"));
+        gameMapper.GameUpdateDtoToGame(gameUpdateDto);
 
-        return gameMapper.GameToGameGetDto(gameRepository.save((game)));
+        return gameMapper.GameToGameGetDto(gameRepository.save((gameMapper.GameUpdateDtoToGame(gameUpdateDto))));
     }
 
     public String deleteGame(Long id) {
-        Game game=gameRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("game"));
-        game.setIs_deleted(true);
+        Game game = gameRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("game"));
+        game.setIsDeleted(true);
         gameRepository.save(game);
         return "Delete game successfully";
     }

@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface GameRepository extends JpaRepository<Game, Long> {
     Boolean existsUserByName (String name);
 
-    @Query("SELECT u FROM Game u WHERE u.id = ?1 and u.is_deleted = ?2")
-    Optional<Game> findGameByIdAndIs_deleted(Long id, Boolean is_deleted);
+    @Query("SELECT u FROM Game u WHERE u.id = ?1 and u.isDeleted = ?2")
+    Optional<Game> findGameByIdAndIsDeleted(Long id, Boolean isDeleted);
 
 }

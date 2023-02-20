@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Builder
@@ -11,12 +13,13 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class GameUpdateDto {
+    @NotNull
     private Long id;
     private String name;
     private String platform;
-    private Date release_date;
+    private Date releaseDate;
     private String country;
-    private Integer scores;
+    private Double scores;
     private String developers;
     private String publishers;
     private String introduction;

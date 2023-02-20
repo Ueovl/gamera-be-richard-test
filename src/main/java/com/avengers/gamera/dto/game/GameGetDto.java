@@ -15,14 +15,14 @@ public class GameGetDto {
     private Long id;
     private String name;
     private String platform;
-    private Date release_date;
+    private Date releaseDate;
     private String country;
-    private Integer scores;
+    private Double scores;
     private String developers;
     private String publishers;
     private String introduction;
     private String description;
-    private Boolean is_deleted;
+    private Boolean isDeleted;
     private OffsetDateTime createdTime;
     private OffsetDateTime updatedTime;
 }

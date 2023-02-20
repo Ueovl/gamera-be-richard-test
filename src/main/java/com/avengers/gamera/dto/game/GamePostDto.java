@@ -16,26 +16,19 @@ public class GamePostDto {
     @Size(max = 255, message = "Username can not be more than 255 characters.")
     private String name;
 
-    @NotBlank
     private String platform;
 
-    private Date release_date;
+    private Date releaseDate;
 
-    @NotBlank
     private String country;
 
-    private Integer scores;
+    private Double scores;
 
-    @NotBlank
     private String developers;
 
-    @NotBlank
     private String publishers;
-
-    @NotBlank
     private String introduction;
 
-    @NotBlank
     private String description;
 
 }

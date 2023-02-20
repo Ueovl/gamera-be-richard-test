@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
 
 @Configuration
@@ -16,6 +17,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf().disable()
+                .cors().configurationSource(request -> {
+                    var cors= new CorsConfiguration();
+                    cors.addAllowedOrigin("*");
+                    cors.addAllowedHeader("*");
+                    cors.addAllowedMethod("*");
+                    return cors;
+                })
+                .and()
                 .authorizeRequests()
                 .antMatchers("/**")
                 .permitAll()

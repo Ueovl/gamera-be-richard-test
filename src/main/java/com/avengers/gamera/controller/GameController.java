@@ -25,7 +25,7 @@ public class GameController {
         return gameService.getGame(id);
     }
 
-    @PutMapping
+    @PatchMapping
     public GameGetDto updateGame(@Valid @RequestBody GameUpdateDto gameUpdateDto){
         return gameService.updateGame(gameUpdateDto);
     }

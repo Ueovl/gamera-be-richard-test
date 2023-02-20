@@ -1,8 +1,14 @@
 package com.avengers.gamera.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -10,46 +16,52 @@ import java.util.Date;
 
 @Entity
 @Table
-@Getter
 @Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String platform;
 
-    @Column(nullable = false)
-    private Date release_date;
+    @Column (name = "release_date")
+    private Date releaseDate;
 
-    @Column(nullable = false)
+    @Column
     private String country;
 
-    @Column(nullable = false)
-    private Integer scores;
-    @Column(nullable = false)
+    @Column
+    private Double scores;
+    @Column
     private String developers;
-    @Column(nullable = false)
+    @Column
     private String publishers;
-    @Column(nullable = false)
+    @Column
     private String introduction;
-    @Column(nullable = false)
+    @Column
     private String description;
-    @Column()
+    @Column (name = "is_deleted")
     @Builder.Default
-    private Boolean is_deleted=false;
+    private Boolean isDeleted=false;
 
+    @Column (name = "created_time")
     @CreationTimestamp
-    private OffsetDateTime created_time;
+    private OffsetDateTime createdTime;
 
+    @Column (name = "updated_time")
     @UpdateTimestamp
-    private OffsetDateTime updated_time;
+    private OffsetDateTime updatedTime;
+
+
 
 }
