@@ -35,12 +35,11 @@ public class GameService {
     }
 
     public GameGetDto getGame(Long id) {
-        Game game = gameRepository.findGameByIdAndIsDeleted(id, false).orElseThrow(() -> new ResourceNotFoundException("game"));
-        return gameMapper.GameToGameGetDto(game);
+        return gameMapper.GameToGameGetDto(findActiveGame(id));
     }
 
     public GameGetDto updateGame(GameUpdateDto gameUpdateDto, Long id) {
-        Game game = gameRepository.findGameByIdAndIsDeleted(id, false).orElseThrow(() -> new ResourceNotFoundException("game"));
+        Game game = findActiveGame(id);
         gameUpdateDto.setCreatedTime(game.getCreatedTime());
         gameUpdateDto.setId(id);
         gameUpdateDto.setIsDeleted(game.getIsDeleted());
@@ -51,9 +50,13 @@ public class GameService {
     }
 
     public String deleteGame(Long id) {
-        Game game = gameRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("game"));
+        Game game = findActiveGame(id);
         game.setIsDeleted(true);
         gameRepository.save(game);
         return "Delete game successfully";
+    }
+
+    public Game findActiveGame(Long id) {
+        return gameRepository.findGameByIdAndIsDeletedFalse(id).orElseThrow(() -> new ResourceNotFoundException("game"));
     }
 }

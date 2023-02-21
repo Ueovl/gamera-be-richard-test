@@ -22,7 +22,6 @@ public class GameGetDto {
     private String publishers;
     private String introduction;
     private String description;
-    private Boolean isDeleted;
     private OffsetDateTime createdTime;
     private OffsetDateTime updatedTime;
 }
