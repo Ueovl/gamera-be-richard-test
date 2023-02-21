@@ -15,7 +15,6 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -25,8 +24,9 @@ public class SecurityConfig {
     private List<String> allowedOrigins;
     private List<String> allowedMethods;
     private List<String> allowedHeaders;
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
                 .cors().configurationSource(request -> {
@@ -47,7 +47,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
