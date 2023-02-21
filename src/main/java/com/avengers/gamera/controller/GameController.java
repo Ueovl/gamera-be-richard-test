@@ -5,6 +5,7 @@ import com.avengers.gamera.dto.game.GamePostDto;
 import com.avengers.gamera.dto.game.GameUpdateDto;
 import com.avengers.gamera.service.GameService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ public class GameController {
     public final GameService gameService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public GameGetDto createGame (@Valid @RequestBody GamePostDto gamePostDto){
         return gameService.createGame(gamePostDto);
     }
