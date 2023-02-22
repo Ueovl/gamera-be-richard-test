@@ -28,7 +28,6 @@ public class GenreServiceTest {
     private GenreService genreService;
 
     Genre mockGenre = Genre.builder().id(1L).name("Avenger").createdTime(OffsetDateTime.now()).updatedTime(OffsetDateTime.now()).build();
-    Genre mockUpdateGenre = Genre.builder().id(1L).name("Avenger2").createdTime(OffsetDateTime.now()).updatedTime(OffsetDateTime.now()).build();
     GenrePostDto mockGenrePostDto = GenrePostDto.builder().name("Avenger").build();
     GenreGetDto mockGenreGetDto = GenreGetDto.builder().id(1L).name("Avenger").createdTime(OffsetDateTime.now()).updatedTime(OffsetDateTime.now()).build();
     GenreGetDto mockUpdateGenreGetDto = GenreGetDto.builder().id(1L).name("Avenger2").createdTime(OffsetDateTime.now()).updatedTime(OffsetDateTime.now()).build();
@@ -60,7 +59,7 @@ public class GenreServiceTest {
     void shouldReturnGenreGetDtoWhenUpdateGenre() {
         Long mockId = 1L;
         when(genreRepository.findById(mockId)).thenReturn(Optional.ofNullable(mockGenre));
-        when(genreMapper.GenreToGenreGetDto(genreRepository.save(mockUpdateGenre))).thenReturn(mockUpdateGenreGetDto);
+        when(genreMapper.GenreToGenreGetDto(mockGenre)).thenReturn(mockUpdateGenreGetDto);
 
         GenreGetDto genreGetDto = genreService.updateGe(mockGenreUpdateDto, mockId);
 

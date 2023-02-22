@@ -65,7 +65,7 @@ public class GameControllerTest {
     }
 
     @Test
-    void shouldReturn200AndGameGetDtoWhenGetAgentDto() throws Exception {
+    void shouldReturn200AndGameGetDtoWhenGetGameDto() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/games/" + mockGameId))
                 .andExpect(status().isOk())
