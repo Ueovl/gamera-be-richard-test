@@ -45,6 +45,7 @@ public class Article {
     private ArticleType type;
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean isDeleted = false;
 
     @CreationTimestamp
