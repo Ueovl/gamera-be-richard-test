@@ -1,9 +1,11 @@
 package com.avengers.gamera.service;
 
 import com.avengers.gamera.dto.user.UserGetDto;
+import com.avengers.gamera.dto.user.UserInfoDto;
 import com.avengers.gamera.dto.user.UserPostDto;
 import com.avengers.gamera.entity.User;
 import com.avengers.gamera.exception.ResourceExistException;
+import com.avengers.gamera.exception.ResourceNotFoundException;
 import com.avengers.gamera.mapper.UserMapper;
 import com.avengers.gamera.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +34,13 @@ public class UserService {
             throw new ResourceExistException("Email already existed!");
         }
         return isExisted;
+    }
+
+    public UserInfoDto getUserInfo(String email) {
+        return userMapper.userToUserInfoDto(getByEmail(email));
+    }
+
+    private User getByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User", email));
     }
 }

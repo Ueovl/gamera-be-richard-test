@@ -1,4 +1,4 @@
-CREATE TABLE "game_genre"(
+≠CREATE TABLE "game_genre"(
     "id" BIGSERIAL PRIMARY KEY,
     "game_id" BIGINT,
      CONSTRAINT fk_game_game_genre

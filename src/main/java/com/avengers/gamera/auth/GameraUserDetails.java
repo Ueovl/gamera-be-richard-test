@@ -1,18 +1,20 @@
 package com.avengers.gamera.auth;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Set;
 
-@RequiredArgsConstructor
+
 @Builder
 @Getter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class GameraUserDetails implements UserDetails {
+
+    private Long id;
     private String username;
     private String password;
     private final Set<? extends GrantedAuthority> grantedAuthorities;
@@ -56,7 +58,7 @@ public class GameraUserDetails implements UserDetails {
         return isEnabled;
     }
 
-
-
-
+    public Long getId() {
+        return id;
+    }
 }

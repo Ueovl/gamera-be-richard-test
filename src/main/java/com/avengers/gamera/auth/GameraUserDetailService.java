@@ -29,6 +29,7 @@ public class GameraUserDetailService implements UserDetailsService {
                 .collect(Collectors.toSet());
 
         return GameraUserDetails.builder()
+                .id(user.getId())
                 .username(user.getEmail())
                 .password(user.getPassword())
                 .grantedAuthorities(grantedAuthorities)
