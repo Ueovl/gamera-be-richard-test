@@ -1,6 +1,5 @@
 package com.avengers.gamera.entity;
 
-import com.avengers.gamera.constant.ArticleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,48 +8,65 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.time.OffsetDateTime;
+import java.util.Date;
 
 @Entity
-@Table(name = "article")
-@Getter
+@Table
 @Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Article {
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
-    private String coverImgUrl;
+    private String name;
 
-    @Column(nullable = false)
-    private String title;
+    @Column
+    private String platform;
 
-    @Column(nullable = false)
-    private String text;
+    @Column(name = "release_date")
+    private Date releaseDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ArticleType type;
+    @Column
+    private String country;
 
-    @Column(nullable = false)
+    @Column
+    private Double scores;
+
+    @Column
+    private String developers;
+
+    @Column
+    private String publishers;
+
+    @Column
+    private String introduction;
+
+    @Column
+    private String description;
+
+    @Column(name = "is_deleted")
     @Builder.Default
-    private boolean isDeleted = false;
+    private Boolean isDeleted = false;
 
+    @Column(name = "created_time")
     @CreationTimestamp
     private OffsetDateTime createdTime;
 
+    @Column(name = "updated_time")
     @UpdateTimestamp
     private OffsetDateTime updatedTime;
+
 }

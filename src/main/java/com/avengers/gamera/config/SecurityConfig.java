@@ -35,11 +35,13 @@ public class SecurityConfig {
     private List<String> allowedMethods;
     private List<String> allowedHeaders;
 
+
     private final GameraUserDetailService gameraUserDetailService;
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
     private final JwtTokenVerifyFilter jwtTokenVerifyFilter;
     private final UserService userService;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
