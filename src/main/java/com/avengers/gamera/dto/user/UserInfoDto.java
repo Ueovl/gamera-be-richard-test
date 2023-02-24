@@ -17,5 +17,4 @@ public class UserInfoDto {
     private long id;
     private Set<Authority> authorities;
     private String email;
-    private String profileImgUrl;
 }

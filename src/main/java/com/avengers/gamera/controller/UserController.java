@@ -1,5 +1,6 @@
 package com.avengers.gamera.controller;
 
+import com.avengers.gamera.dto.user.UserAddRoleDto;
 import com.avengers.gamera.dto.user.UserGetDto;
 import com.avengers.gamera.dto.user.UserPostDto;
 import com.avengers.gamera.service.UserService;
@@ -22,6 +23,12 @@ public class UserController {
     @Operation(summary = "Create new user")
     public ResponseEntity<UserGetDto> createUser(@Valid @RequestBody UserPostDto userPostDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userPostDto));
+    }
+
+    @PostMapping("/add-role")
+    public ResponseEntity<?> addRoleToUser(@RequestBody UserAddRoleDto userAddRole) {
+        userService.addRoleToUser(userAddRole.getEmail(), userAddRole.getName());
+        return ResponseEntity.ok().build();
     }
 
 

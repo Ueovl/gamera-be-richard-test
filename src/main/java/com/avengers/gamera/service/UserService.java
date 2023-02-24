@@ -3,6 +3,7 @@ package com.avengers.gamera.service;
 import com.avengers.gamera.dto.user.UserGetDto;
 import com.avengers.gamera.dto.user.UserInfoDto;
 import com.avengers.gamera.dto.user.UserPostDto;
+import com.avengers.gamera.entity.Authority;
 import com.avengers.gamera.entity.User;
 import com.avengers.gamera.exception.ResourceExistException;
 import com.avengers.gamera.exception.ResourceNotFoundException;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    private final AuthorityService authorityService;
 
     public UserGetDto createUser(UserPostDto userPostDto) {
         String email = userPostDto.getEmail();
@@ -43,4 +46,13 @@ public class UserService {
     private User getByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User", email));
     }
+
+    public void addRoleToUser(String email, String name) {
+        User user = getByEmail(email);
+        Authority authority = authorityService.getByAuthorityName(name);
+        log.info("Adding authority {} to user {}", email, name);
+        user.getAuthorities().add(authority);
+    }
+
+
 }
