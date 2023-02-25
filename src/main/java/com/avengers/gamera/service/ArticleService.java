@@ -1,8 +1,10 @@
 package com.avengers.gamera.service;
 
 import com.avengers.gamera.dto.article.ArticleGetDto;
+import com.avengers.gamera.dto.article.ArticlePatchDto;
 import com.avengers.gamera.dto.article.ArticlePostDto;
 import com.avengers.gamera.entity.Article;
+import com.avengers.gamera.exception.ResourceNotFoundException;
 import com.avengers.gamera.mapper.ArticleMapper;
 import com.avengers.gamera.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,18 @@ public class ArticleService {
             article.setCoverImgUrl("https://spicsum.photos/800/400");
         }
         log.info("Saving new article to database");
+        return articleMapper.articleToArticleGetDto(articleRepository.save(article));
+    }
+
+    public ArticleGetDto updateArticle(Long id, ArticlePatchDto articlePatchDto){
+        Article article = articleRepository.findById(id).orElseThrow(() -> (new ResourceNotFoundException("Article")));
+
+        article.setTitle(articlePatchDto.getTitle());
+        article.setText(articlePatchDto.getText());
+        article.setType(articlePatchDto.getType());
+
+        log.info("Updating article by article id");
+
         return articleMapper.articleToArticleGetDto(articleRepository.save(article));
     }
 }
