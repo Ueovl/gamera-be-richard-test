@@ -1,35 +1,87 @@
 package com.avengers.gamera.service;
 
+import com.avengers.gamera.constant.ArticleType;
 import com.avengers.gamera.dto.article.ArticleGetDto;
 import com.avengers.gamera.dto.article.ArticlePatchDto;
 import com.avengers.gamera.dto.article.ArticlePostDto;
+import com.avengers.gamera.dto.article.MiniArticleGetDto;
 import com.avengers.gamera.entity.Article;
+import com.avengers.gamera.entity.Game;
+import com.avengers.gamera.entity.User;
 import com.avengers.gamera.exception.ResourceNotFoundException;
 import com.avengers.gamera.mapper.ArticleMapper;
 import com.avengers.gamera.repository.ArticleRepository;
+import com.avengers.gamera.repository.GameRepository;
+import com.avengers.gamera.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.awt.print.Pageable;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final GameRepository gameRepository;
+    private final UserRepository userRepository;
     private final ArticleMapper articleMapper;
 
     public ArticleGetDto createArticle(ArticlePostDto articlePostDto) {
 
         Article article = articleMapper.articlePostDtoToArticle(articlePostDto);
         String img = article.getCoverImgUrl();
-
-        //TODO after image upload function implemented, this url should from user
         if (StringUtils.isBlank(img)) {
             article.setCoverImgUrl("https://spicsum.photos/800/400");
         }
-        log.info("Saving new article to database");
+        Game game = gameRepository.findById(articlePostDto.getGameId()).orElseThrow(()->
+                new ResourceNotFoundException("Related game")
+        );
+        article.setGame(game);
+        User user = userRepository.findById(articlePostDto.getAuthorId()).orElseThrow(() ->
+                new ResourceNotFoundException("Related Author(user)")
+        );
+        article.setUser(user);
+        log.info("==========Saving new article to database==============");
         return articleMapper.articleToArticleGetDto(articleRepository.save(article));
+    }
+
+    public List<MiniArticleGetDto> getMiniArticles(int pageNumber, int pageSize){
+        log.info("Try to get some articles that has not been deleted .....");
+        List<Article> articles = articleRepository.findArticleByIsDeletedFalse((Pageable) PageRequest.of(pageNumber,pageSize));
+
+        if(articles.size()==0) {
+            return null;
+        }
+        return articleMapper.articleToMiniArticleGetDto(articles);
+
+    }
+
+    public List<MiniArticleGetDto> getMiniArticlesByType(ArticleType articleType, int pageNumber, int pageSize) {
+        log.info("Try to get some articles that has not been deleted .....");
+        List<Article> articles = articleRepository.findArticlesByTypeAndIsDeletedFalse(articleType, (Pageable) PageRequest.of(pageNumber, pageSize));
+        if(articles.size()==0) {
+            return null;
+        }
+        return articleMapper.articleToMiniArticleGetDto(articles);
+    }
+
+    public ArticleGetDto getArticleById(Long articleId) {
+        Article article = articleRepository.findById(articleId).orElseThrow(() ->
+                new ResourceNotFoundException("Related Article with the ID(" + articleId + ")")
+        );
+        return articleMapper.articleToArticleGetDto(article);
+    }
+
+    public void deleteArticleById(Long articleId) {
+        Article article = articleRepository.findById(articleId).orElseThrow(() ->
+                new ResourceNotFoundException("Related Article with the ID(" + articleId + ")")
+        );
+        articleRepository.delete(article);
     }
 
     public ArticleGetDto updateArticle(Long id, ArticlePatchDto articlePatchDto){

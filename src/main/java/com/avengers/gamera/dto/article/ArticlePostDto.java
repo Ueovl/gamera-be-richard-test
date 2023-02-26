@@ -18,6 +18,12 @@ public class ArticlePostDto {
 
     private String coverImgUrl;
 
+    @NotBlank(message = "gameId must be provided.")
+    private Long gameId;
+
+    @NotBlank(message = "authorId must be provided.")
+    private Long authorId;
+
     @NotBlank(message = "Article title must be provided.")
     @Size(max = 255, message = "Article title can not be more than 255 characters.")
     private String title;
